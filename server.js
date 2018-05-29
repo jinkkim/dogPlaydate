@@ -52,7 +52,15 @@ app.engine("handlebars", handlebars({
 app.set("view engine", "handlebars");
 
 app.get("/", function(req, res){
-    res.render("index", handlebarObj);
+    res.render("index");
+});
+
+app.get("/search", function(req, res){
+    res.render("search", handlebarObj);
+});
+
+app.get("/scheduler", function(req, res){
+    res.render("scheduler");
 });
 
 var port = process.env.PORT || 3000;
