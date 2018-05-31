@@ -1,11 +1,39 @@
-{{#dog_info}}
+<h1>This is your information</h1>
+
+
+{{#myProfile}}
 
 <h1>{{dog_name}}</h1>
 <p>Owner: {{first_name}} </p>
-<p>dog age: {{dog_age}} </p>
-<p>dog breed: {{dog_breed}} </p>
-<p>dog personality: {{dog_personality}} </p>
-<p>dog gender: {{dog_gender}} </p>
+<p>Dog age: {{dog_age}} </p>
+<p>Dog breed: {{dog_breed}} </p>
+<p>Dog gender: {{dog_gender}} </p>
+<p>Dog personality: {{dog_personality}} </p>
 <p>zipcode: {{zipcode}}</p>
 
-{{/dog_info}}
+<form>
+    <input type="button" value="Update" onclick="window.location.href='/update'" />
+</form>
+
+{{/myProfile}}
+
+
+<h1>Let's find out your friend!   </h1>
+<form action="/result" method="get">
+    <label for="zipcode">Zipcode: </label>
+    <input id="zipcode" type="text" name="zipcode" value=""><br>
+
+    <label for="dog_personality">Dog Personality: </label>
+    <input id="dog_personality" type="text" name="dog_personality" value=""><br>
+
+    <label for="dog_gender">Dog Gender: </label>
+    <input id="dog_gender" type="text" name="dog_gender" value=""><br>
+
+    <label for="dog_age">Dog Age: </label>
+    <input id="dog_age" type="text" name="dog_age" value=""><br>
+    
+    <label for="dog_weight">Dog Weight: </label>
+    <input id="dog_weight" type="text" name="dog_weight" value=""><br>
+
+    <input type="submit" value="submit">
+</form>
