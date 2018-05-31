@@ -1,27 +1,27 @@
 //mysql connection
 var mysql = require("mysql");
 
-DB connection (clearDB)
-var connection = mysql.createConnection({
-    host : 'us-cdbr-iron-east-04.cleardb.net',
-    user : 'b6633b71acf36b',
-    password: 'c8760750',
-    database: 'heroku_20540d41c0ab631'
-});
+//DB connection (clearDB)
+//var connection = mysql.createConnection({
+//    host : 'us-cdbr-iron-east-04.cleardb.net',
+//    user : 'b6633b71acf36b',
+//    password: 'c8760750',
+//    database: 'heroku_20540d41c0ab631'
+//});
 
 //DB connection (mysql)
-//var connection = mysql.createConnection({
-//    host : 'localhost',
-//    user : 'web',
-//    password: '1234',
-//    database: 'dogprofile'
-//});
+var connection = mysql.createConnection({
+    host : 'localhost',
+    user : 'web',
+    password: '1234',
+    database: 'dogprofile'
+});
 
 connection.connect();
 
 //DB query
-//var dbTable = "dogprofile.dog_info";
-var dbTable = "heroku_20540d41c0ab631.dog_info"
+var dbTable = "dogprofile.dog_info";
+//var dbTable = "heroku_20540d41c0ab631.dog_info"
 var queryString = '';
 var handlebarObj = '';
 var myhandlebarObj = '';
