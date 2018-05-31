@@ -1,5 +1,16 @@
-<form>
-<input type="button" value="profile" onclick="window.location.href='./profile'" />
-<input type="button" value="DB show" onclick="window.location.href='./search'" />
-<input type="button" value="Scheduler" onclick="window.location.href='./scheduler'" />
+<form action="/search" method="get">
+    <label for="email">Email: </label>
+    <input id="email" type="text" name="email" value=""><br>
+
+    <label for="zipcode">zipcode: </label>
+    <input id="zipcode" type="text" name="zipcode" value=""><br>
+
+    <input type="submit" value="login">
 </form>
+
+<h1>This is my first time. I want to list my info</h1>
+<form>
+<input type="button" value="Sign up" onclick="window.location.href='/create'" />
+</form>
+
+
