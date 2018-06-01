@@ -1,7 +1,11 @@
 //mysql connection
 var mysql = require("mysql");
 
+<<<<<<< HEAD
 // DB connection (clearDB)
+=======
+DB connection (clearDB)
+>>>>>>> 5363ba40dc648fe958b3f240f07d0a1de293953e
 var connection = mysql.createConnection({
     host : 'us-cdbr-iron-east-04.cleardb.net',
     user : 'b6633b71acf36b',
@@ -11,7 +15,11 @@ var connection = mysql.createConnection({
 
 //DB connection (mysql)
 //var connection = mysql.createConnection({
+<<<<<<< HEAD
 //    host : 'localhost',
+=======
+//   host : 'localhost',
+>>>>>>> 5363ba40dc648fe958b3f240f07d0a1de293953e
 //    user : 'web',
 //    password: '1234',
 //    database: 'dogprofile'
