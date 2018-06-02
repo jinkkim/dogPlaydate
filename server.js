@@ -64,6 +64,7 @@ app.get("/login", function(req, res){
     res.render("login");
 });
 
+
 app.get('/searchme', function(req, res){
   
     var myEmail = req.query.email;
@@ -76,7 +77,7 @@ app.get('/searchme', function(req, res){
       //handlebar object
       myhbsObject = {myInfo: res};
     });
-    
+    res.send("200")
     //pass myhbsOjbect to profile handlebars
   });
 
@@ -185,6 +186,9 @@ app.get("/profile", function(req, res){
     
 });
 
+//create something for /update where user is able to edit profile information and it sends it to DB
+//app.post(“/update”, function(req,res){
+//});
 
 //app.get("/scheduler", function(req, res){
 //    res.render("scheduler");
