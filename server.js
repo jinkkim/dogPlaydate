@@ -190,7 +190,7 @@ app.get("/profile", function(req, res){
 //    res.render("scheduler");
 //});
 
-var port = process.env.PORT || 3000;
-app.listen(port, function(){
-    console.log("listening on " + port);
+var PORT = process.env.PORT || 3000;
+app.listen(PORT, function(){
+    console.log("listening on " + PORT);
 });
