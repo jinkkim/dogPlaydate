@@ -111,7 +111,7 @@ app.post('/create', function(req, res){
     connection.query(queryString, function(err, res){
         if(err) {console.log(err);}
         console.log("db created!")
-        res.send("yay");
+        
     });
     res.send("200");
 });
