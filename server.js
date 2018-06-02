@@ -2,7 +2,8 @@
 var mysql = require("mysql");
 
 // DB connection (clearDB)
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
+    connectionLimit: 10,
     host : 'us-cdbr-iron-east-04.cleardb.net',
     user : 'b6633b71acf36b',
     password: 'c8760750',
@@ -153,6 +154,7 @@ app.get('/result',function(req,res){
 
         handlebarObj = {dog_profile: res};
     });
+
     res.render('result', handlebarObj)
     
 });
@@ -170,13 +172,14 @@ app.get("/profile", function(req, res){
     //DB query
     var queryString = 'SELECT * FROM ' + dbTable + ' WHERE email ="'+ myEmail + '" and zipcode = '+myZipcode + ';';
     //console.log(queryString);
-    connection.query(queryString, function(err, res){
+    connection.query(queryString, function(err, results){
         if(err) {console.log(err);}
         //handlebar object
-        myhandlebarObj = {myProfile: res};
-    });
-    console.log(myhandlebarObj);
+        myhandlebarObj = {myProfile: results};
+        console.log(myhandlebarObj);
     res.render("profile", myhandlebarObj);
+    });
+    
     
 });
 
