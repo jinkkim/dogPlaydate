@@ -1,15 +1,13 @@
 <h1>This is search result</h1>
 
+{{#each dog_profile}}
 
-{{#dog_profile}}
+    <h2>{{dog_name}}</h2>
+    <p>Owner: {{first_name}} </p>
+    <p>Dog breed: {{dog_breed}} </p>
+    <p>Dog Personality: {{dog_personality}} </p>
+    <p>Dog Weight: {{dog_weight}} </p>
+    <p>zipcode: {{zipcode}}</p>
+    <img src="{{img_url}}" alt="">
 
-<h2>{{dog_name}}</h2>
-<p>Owner: {{first_name}} </p>
-<p>Dog breed: {{dog_breed}} </p>
-<p>Dog Personality: {{dog_personality}} </p>
-<p>Dog Weight: {{dog_weight}} </p>
-<p>zipcode: {{zipcode}}</p>
-<img src="{{img_url}}" alt="">
-
-{{/dog_profile}}
-
+{{/each}}

@@ -48,29 +48,29 @@ $(function () {
     });
 });
 
-$(document).ready(function () {
-    var myButton = $('#mybutton');
-    var userFeed = new Instafeed({
-        get: 'user',
-        userId: '4828631159',
-        accessToken: '4828631159.1677ed0.79cec29b3ab94404ad45f640b87dc4ef',
-        limit: '12',
-        sortBy: 'most-recent',
-        after: function () {
-            var images = $("#instafeed").find('a');
-            $.each(images, function (index, image) {
-                var delay = (index * 75) + 'ms';
-                $(image).css('-webkit-animation-delay', delay);
-                $(image).css('-moz-animation-delay', delay);
-                $(image).css('-ms-animation-delay', delay);
-                $(image).css('-o-animation-delay', delay);
-                $(image).css('animation-delay', delay);
-                $(image).addClass('animated flipInX');
-            });
+// $(document).ready(function () {
+//     var myButton = $('#mybutton');
+//     var userFeed = new Instafeed({
+//         get: 'user',
+//         userId: '4828631159',
+//         accessToken: '4828631159.1677ed0.79cec29b3ab94404ad45f640b87dc4ef',
+//         limit: '12',
+//         sortBy: 'most-recent',
+//         after: function () {
+//             var images = $("#instafeed").find('a');
+//             $.each(images, function (index, image) {
+//                 var delay = (index * 75) + 'ms';
+//                 $(image).css('-webkit-animation-delay', delay);
+//                 $(image).css('-moz-animation-delay', delay);
+//                 $(image).css('-ms-animation-delay', delay);
+//                 $(image).css('-o-animation-delay', delay);
+//                 $(image).css('animation-delay', delay);
+//                 $(image).addClass('animated flipInX');
+//             });
 
-        },
-        template: ' <div class="col-md-4 col-sm-6 col-xs-6 width-100 mb-15"> <div class="blog-img"><a href="{{link}}" target="_blank"><img src="{{image}}" /><div class="likes">&hearts; {{likes}}</div></a></div></div>'
-    });
-    userFeed.run();
-});
+//         },
+//         template: ' <div class="col-md-4 col-sm-6 col-xs-6 width-100 mb-15"> <div class="blog-img"><a href="{{link}}" target="_blank"><img src="{{image}}" /><div class="likes">&hearts; {{likes}}</div></a></div></div>'
+//     });
+//     userFeed.run();
+// });
 

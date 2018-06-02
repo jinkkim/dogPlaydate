@@ -2,27 +2,31 @@
 var mysql = require("mysql");
 
 // DB connection (clearDB)
-var connection = mysql.createPool({
-    connectionLimit: 10,
-    host : 'us-cdbr-iron-east-04.cleardb.net',
-    user : 'b6633b71acf36b',
-    password: 'c8760750',
-    database: 'heroku_20540d41c0ab631'
-});
-
-//DB connection (mysql)
-//var connection = mysql.createConnection({
-//    host : 'localhost',
-//    user : 'web',
-//    password: '1234',
-//    database: 'dogprofile'
+//var connection = mysql.createPool({
+//    connectionLimit: 10,
+//    host : 'us-cdbr-iron-east-04.cleardb.net',
+//    user : 'b6633b71acf36b',
+//    password: 'c8760750',
+//    database: 'heroku_20540d41c0ab631'
 //});
 
-connection.connect();
+//DB connection (mysql)
+var connection = mysql.createConnection({
+    host : 'localhost',
+    user : 'web',
+  password: '1234',
+  database: 'dogprofile',
+  port: 3306
+});
+
+connection.connect(function(err) {
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId + "\n");
+});
 
 //DB query
 //var dbTable = "dogprofile.dog_info";
-var dbTable = "heroku_20540d41c0ab631.dog_info"
+var dbTable = "dog_info"
 var queryString = '';
 var handlebarObj = '';
 var myhandlebarObj = '';
@@ -146,17 +150,15 @@ app.get('/result',function(req,res){
     if (dogWeight){
         queryString+=' AND dog_weight = "' + dogWeight + '"';
     }
-
-    //console.log(queryString);
-
-    connection.query(queryString, function(err,res){
+    console.log("Query", queryString);
+    connection.query(queryString, function(err,response){
         if(err) {console.log(err);}
-
-        handlebarObj = {dog_profile: res};
+        console.log("Data Response: ", response);
+        console.log("------------------------");
+        let data = {dog_profile: response};
+        console.log(data);
+        res.render("result", data)
     });
-
-    res.render('result', handlebarObj)
-    
 });
 
 
