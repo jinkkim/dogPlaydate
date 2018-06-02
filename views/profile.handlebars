@@ -1,2 +1,18 @@
-this is profile page
 
+<h1>This is your information</h1>
+
+{{#myProfile}}
+
+<h1>{{dog_name}}</h1>
+<p>Owner: {{first_name}} </p>
+<p>Dog age: {{dog_age}} </p>
+<p>Dog breed: {{dog_breed}} </p>
+<p>Dog gender: {{dog_gender}} </p>
+<p>Dog personality: {{dog_personality}} </p>
+<p>zipcode: {{zipcode}}</p>
+
+<form>
+    <input type="button" value="Update" onclick="window.location.href='/update'" />
+</form>
+
+{{/myProfile}}
