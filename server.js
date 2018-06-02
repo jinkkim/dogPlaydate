@@ -164,8 +164,8 @@ app.get("/profile", function(req, res){
     
     //get these values from login pages
     //for now they have test values
-    var myEmail = "mtwiggins0@parallels.com";
-    var myZipcode = "26925";
+    var myEmail = "ncubley1@amazon.co.uk";
+    var myZipcode = "93915";
     
     //DB query
     var queryString = 'SELECT * FROM ' + dbTable + ' WHERE email ="'+ myEmail + '" and zipcode = '+myZipcode + ';';
@@ -175,6 +175,7 @@ app.get("/profile", function(req, res){
         //handlebar object
         myhandlebarObj = {myProfile: res};
     });
+    console.log(myhandlebarObj);
     res.render("profile", myhandlebarObj);
     
 });
