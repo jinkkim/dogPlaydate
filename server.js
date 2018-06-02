@@ -2,22 +2,22 @@
 var mysql = require("mysql");
 
 // DB connection (clearDB)
-//var connection = mysql.createPool({
-//    connectionLimit: 10,
-//    host : 'us-cdbr-iron-east-04.cleardb.net',
-//    user : 'b6633b71acf36b',
-//    password: 'c8760750',
-//    database: 'heroku_20540d41c0ab631'
-//});
+var connection = mysql.createPool({
+   connectionLimit: 10,
+   host : 'us-cdbr-iron-east-04.cleardb.net',
+   user : 'b6633b71acf36b',
+   password: 'c8760750',
+   database: 'heroku_20540d41c0ab631'
+});
 
 //DB connection (mysql)
-var connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'web',
-  password: '1234',
-  database: 'dogprofile',
-  port: 3306
-});
+// var connection = mysql.createConnection({
+//     host : 'localhost',
+//     user : 'web',
+//   password: '1234',
+//   database: 'dogprofile',
+//   port: 3306
+// });
 
 connection.connect(function(err) {
     if (err) throw err;
