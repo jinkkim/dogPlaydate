@@ -1,13 +1,32 @@
-<h1>This is search result</h1>
+<section class="padd-top-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>LAB-racadabra!<span class="text-thin">
+                We've found your perfect match. </span> </h3>
+            </div>
+        </div>
+        <br> <br>
+        <div class="row">
+            {{#each dog_profile}}
+            <div class="col-xs-3">
+                <h6>{{dog_name}}</h6>
+                    <img src="{{img_url}}" alt="" height="150" width="150">
+            </div>
+            <div class="col-xs-3">
+                <br>
+                <p><b>Owner:</b> {{first_name}} </p>
+                <p><b>Dog Breed: </b>{{dog_breed}} </p>
+                <p><b>Dog Personality: </b>{{dog_personality}} </p>
+                <p><b>Dog Gender:</b> {{dog_gender}} </p>
+                <p><b>Dog Age:</b> {{dog_age}} </p>
+                <p><b>Zip Code: </b>{{zipcode}}</p>
+                <input type="submit" value="Let's Bone">
+                <br><br><br>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
 
-{{#each dog_profile}}
-
-    <h2>{{dog_name}}</h2>
-    <p>Owner: {{first_name}} </p>
-    <p>Dog breed: {{dog_breed}} </p>
-    <p>Dog Personality: {{dog_personality}} </p>
-    <p>Dog Weight: {{dog_weight}} </p>
-    <p>zipcode: {{zipcode}}</p>
-    <img src="{{img_url}}" alt="">
-
-{{/each}}

@@ -1,11 +1,3 @@
-/*
-Template Name: FoodEque
-File Name: style.css
-Author Name: ThemeVault
-Author URI: http://www.themevault.net/
-License URI: http://www.themevault.net/license/
-*/
-
 @import url('https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700');
 html, body {
     height: 100%;
@@ -684,91 +676,23 @@ button.close:hover {
     text-shadow: 0 0 0;
 }
 .service-image {
-    // min-height: 216px;
+    min-height: 216px;
     margin-top: 30px;
 }
 
 /*footer*/
-footer{
-    background: #2B2D2D;
-    margin-top: 135px;
-    padding: 35px 0 25px 0;
+.footer{
+    background: rgb(51, 53, 53);
+    padding: 25px 0 25px 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     color: #fff;
-}
-footer .blog-img img{
-    min-height: 105px;
-    margin-bottom: 25px;
-    border: 1px solid #fff;
-    cursor: pointer;
-}
-footer .blog-img img:hover{
-    border-color: #e01931;
-}
-.footer-block > h4 {
-    font-weight: 700;
-    letter-spacing: 4px;
-    margin-bottom: 50px;
-    text-transform: uppercase;
-}
-.footer-block ul li {
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    line-height: 40px;
-    text-transform: uppercase;
-}
-.footer-block ul li p{
-    font-size: 16px;
-    font-weight: 500;
-}
-.footer-block ul li a{
-    color: #fff;
-}
-.footer-block ul li a:hover{
-    color: #e01931
-}
-footer .social-grid ul li {
-    display: inline-block;
-}
-footer .social-grid.text-right a {
-    border: 2px solid #fff;
-    border-radius: 50%;
-    color: #fff;
-    display: inline-block;
-    height: 35px;
     text-align: center;
-    width: 35px;
-    cursor: pointer;
+    width: 100%;
+    margin: 0px;
 }
-footer .social-grid.text-right a:hover{
-    color: #e01931;
-    border-color: #e01931; 
-}
-.footer-block li.active > a{
-    color: #e01931;
-}
-.social-grid.text-right a i {
-    font-size: 16px;
-    line-height: 31px;
-}
-footer .social-grid {
-    padding: 35px 0 5px;
-}
-.social-grid.text-right li + li {
-    margin-left: 15px;
-}
-.copyright {
-    font-size: 18px;
-    letter-spacing: 2px;
-}
-.copyright > a {
-    color: #e01931;
-    font-weight: 600;
-    text-shadow: 1px 1px 4px #000;
-}
-.copyright > a:hover{
-    color:#fff;
-}
+
 /*back to top*/
 .back-to-top {
     bottom: 31px;

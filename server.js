@@ -1,27 +1,36 @@
 //mysql connection
 var mysql = require("mysql");
 
-// DB connection (clearDB)
-var connection = mysql.createConnection({
+// Test Pool
+var pool = mysql.createPool({
+   connectionLimit: 10,
    host : 'us-cdbr-iron-east-04.cleardb.net',
    user : 'b6633b71acf36b',
    password: 'c8760750',
    database: 'heroku_20540d41c0ab631'
 });
 
-//DB connection (mysql)
+// DB connection (clearDB)
 // var connection = mysql.createConnection({
-//     host : 'localhost',
-//     user : 'web',
-//   password: '1234',
-//   database: 'dogprofile',
-//   port: 3306
+//     host : 'us-cdbr-iron-east-04.cleardb.net',
+//     user : 'b6633b71acf36b',
+//     password: 'c8760750',
+//     database: 'heroku_20540d41c0ab631'
 // });
 
-connection.connect(function(err) {
-    if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
-});
+//DB connection (mysql)
+// var connection = mysql.createConnection({
+//    host : 'localhost',
+//    user : 'root',
+//  password: '',
+//  database: 'dogprofile',
+//  port: 3306
+// });
+
+// connection.connect(function(err) {
+//     if (err) {throw err;}
+//     console.log("connected as id " + connection.threadId + "\n");
+// });
 
 //DB query
 //var dbTable = "dogprofile.dog_info";
@@ -29,7 +38,6 @@ var dbTable = "dog_info"
 var queryString = '';
 var handlebarObj = '';
 var myhandlebarObj = '';
-
 
 //display
 var express = require("express");
@@ -48,7 +56,6 @@ app.engine("handlebars", handlebars({
 }));
 app.set("view engine", "handlebars");
 
-
 //index.html --> index.handlebars
 app.get("/", function(req, res){
     res.render("index");
@@ -64,24 +71,21 @@ app.get("/login", function(req, res){
     res.render("login");
 });
 
-
 app.get('/searchme', function(req, res){
-  
     var myEmail = req.query.email;
     var myZipcode = req.query.zipcode;
   
     //DB query
     var queryString = 'SELECT * FROM ' + dbTable + ' WHERE first_name = "'+ myEmail+ '" and zipcode = '+ myZipcode + ';';
-    connection.query(queryString, function(err, res){
+    pool.query(queryString, function(err, res){
       if(err) {console.log(err);}
+
       //handlebar object
       myhbsObject = {myInfo: res};
+      //pass myhbsOjbect to profile handlebars
     });
-    res.send("200")
-    //pass myhbsOjbect to profile handlebars
+    res.redirect('/profile')    
   });
-
-
 
 //signup.html --> create.handlebars
 
@@ -108,15 +112,15 @@ app.post('/create', function(req, res){
         ' (first_name, last_name, email, address, zipcode, dog_name, dog_breed, dog_gender, dog_age, dog_personality ) VALUES ("'+ 
         myFirstName + '", "' + myLastName + '", "' + myEmail + '", "' + myAddress + '", ' + myZipcode + ', "' + myDogName + '", "' + myDogBreed + '", "' + myDogGender + '", "' + myDogAge + '", "'  + myDogPersonality + '")';
 
-    
-    connection.query(queryString, function(err, res){
-        if(err) {console.log(err);}
+    pool.query(queryString, function(err, res){
+        if(err) {
+            console.log(err);
+            console.log("create error");
+        }
         console.log("db created!")
-        
     });
-    res.send("200");
+    res.redirect('/profile')
 });
-
 
 // date.html --> search.handlebars
 
@@ -135,25 +139,24 @@ app.get('/result',function(req,res){
     if (zipcode){
         queryString+=' WHERE zipcode LIKE "' + zipcode + '___"';
     }
-
     if (dogPersonality){
         queryString+=' AND dog_personality = "' + dogPersonality + '"';
     }
-
     if (dogGender){
         queryString+=' AND dog_gender = "' + dogGender + '"';
     }
-
     if (dogAge){
         queryString+=' AND dog_age = "' + dogAge + '"';
     }
-
     if (dogWeight){
         queryString+=' AND dog_weight = "' + dogWeight + '"';
     }
     console.log("Query", queryString);
-    connection.query(queryString, function(err,response){
-        if(err) {console.log(err);}
+    pool.query(queryString, function(err,response){
+        if(err) {
+            console.log(err);
+            console.log("result error");
+        }
         console.log("Data Response: ", response);
         console.log("------------------------");
         let data = {dog_profile: response};
@@ -162,11 +165,9 @@ app.get('/result',function(req,res){
     });
 });
 
-
 //profile.html --> profile.handlebars
 
 app.get("/profile", function(req, res){
-    
     //get these values from login pages
     //for now they have test values
     var myEmail = "ncubley1@amazon.co.uk";
@@ -175,15 +176,16 @@ app.get("/profile", function(req, res){
     //DB query
     var queryString = 'SELECT * FROM ' + dbTable + ' WHERE email ="'+ myEmail + '" and zipcode = '+myZipcode + ';';
     //console.log(queryString);
-    connection.query(queryString, function(err, results){
-        if(err) {console.log(err);}
+    pool.query(queryString, function(err, results){
+        if(err) {
+            console.log(err);
+            console.log("profile error");
+        }
         //handlebar object
         myhandlebarObj = {myProfile: results};
-        console.log(myhandlebarObj);
+        //console.log(myhandlebarObj);
     res.render("profile", myhandlebarObj);
     });
-    
-    
 });
 
 //create something for /update where user is able to edit profile information and it sends it to DB

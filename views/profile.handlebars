@@ -1,18 +1,43 @@
-
-<h1>This is your information</h1>
-
 {{#myProfile}}
 
-<h1>{{dog_name}}</h1>
-<p>Owner: {{first_name}} </p>
-<p>Dog age: {{dog_age}} </p>
-<p>Dog breed: {{dog_breed}} </p>
-<p>Dog gender: {{dog_gender}} </p>
-<p>Dog personality: {{dog_personality}} </p>
-<p>zipcode: {{zipcode}}</p>
-
-<form>
-    <input type="button" value="Update" onclick="window.location.href='/update'" />
-</form>
+<section class="padd-top-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3><span class="text-thin">I'm</span> MUTTS <span class="text-thin"> over my best friend!</span></h3>
+            </div>
+        </div>
+        <br> <br> 
+        <div class="row">
+            <div class="col-xs-3" align="right"> 
+                <p> Add your pic here </p>
+            </div>
+            <div class="col-xs-3" align="left">                
+                <h5> A little about me:</h5> <br>
+                <p> <b>First Name:</b> {{first_name}} </p>
+                <p> <b>Last Name: </b>{{last_name}} </p>
+                <p> <b>Email: </b>{{email}}</p>
+                <p> <b>Address: </b>{{address}} </p>
+                <p> <b>Zip Code: </b>{{zipcode}} </p>
+            </div>
+            <div class="col-xs-3" align="right"> 
+                <p> Add your dog pic here </p>
+            </div>
+            <div class="col-xs-3" align="left">
+                <h5>About my best friend:</h5> <br>
+                <p> <b>Dog Name: </b>{{dog_name}} </p>
+                <p> <b>Breed: </b>{{dog_breed}} </p>
+                <p> <b>Gender: </b>{{dog_gender}} </p>
+                <p> <b>Age:</b> {{dog_age}} </p>
+                <p> <b>Personality:</b> {{dog_personality}} </p>
+                <br>
+                <form>
+                    <input type="button" value="Update" onclick="window.location.href='/update'" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
 
 {{/myProfile}}
