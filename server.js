@@ -1,3 +1,14 @@
+//testing sending emails
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'codemailbox1208@gmail.com',
+    pass: 'codemailbox1!'
+  }
+});
+
 //mysql connection
 var mysql = require("mysql");
 var dialog = require('dialog');
@@ -11,28 +22,6 @@ var pool = mysql.createPool({
    password: 'c8760750',
    database: 'heroku_20540d41c0ab631'
 });
-
-// DB connection (clearDB)
-// var connection = mysql.createConnection({
-//     host : 'us-cdbr-iron-east-04.cleardb.net',
-//     user : 'b6633b71acf36b',
-//     password: 'c8760750',
-//     database: 'heroku_20540d41c0ab631'
-// });
-
-//DB connection (mysql)
-// var connection = mysql.createConnection({
-//    host : 'localhost',
-//    user : 'root',
-//  password: '',
-//  database: 'dogprofile',
-//  port: 3306
-// });
-
-// connection.connect(function(err) {
-//     if (err) {throw err;}
-//     console.log("connected as id " + connection.threadId + "\n");
-// });
 
 //DB query
 //var dbTable = "dogprofile.dog_info";
@@ -114,8 +103,6 @@ app.get("/profile", function(req, res){
     res.render("profile", myhandlebarObj);
 });
 
-//signup.html --> create.handlebars
-
 app.get('/create', function(req, res){
     res.render('create');
 });
@@ -155,7 +142,6 @@ app.post('/upload_d', upload.single('img'), function(req, res) {
 
 
 app.post('/create', function(req, res){
-    
     var myFirstName = req.body.first_name;
     var myLastName = req.body.last_name;
     var myEmail = req.body.email;
@@ -174,10 +160,7 @@ app.post('/create', function(req, res){
         myFirstName + '", "' + myLastName + '", "' + myEmail + '", "' + myAddress + '", ' + myZipcode + ', "' + myDogName + '", "' + myDogBreed + '", "' + myDogGender + '", "' + myDogAge + '", "'  + myDogPersonality + '", " '+ myDogWeight + '", "' + myDogImg + '", "' + myImg + '")';
 
     pool.query(queryString, function(err, res){
-        if(err) {
-            console.log(err);
-            console.log("create error");
-        }
+        if(err) {console.log(err);}
         console.log("db created!")
 
     });
@@ -230,16 +213,46 @@ app.get('/result',function(req,res){
 });
 
 
-
 //create something for /update where user is able to edit profile information and it sends it to DB
 //app.post(“/update”, function(req,res){
 //});
 
-//app.get("/scheduler", function(req, res){
-//    res.render("scheduler");
-//});
+app.get("/scheduler", function(req, res){
+   res.render("scheduler");
+});
+
+//section to test sending email from scheduler
+app.post("/scheduler", function(req, res){    
+    var myEmail = req.body.email;
+    var mySubject = req.body.sub;
+    var myDate = req.body.date;
+    var myTime = req.body.time;
+    var myMessage = req.body.message;
+    
+    var mailOptions = {
+        from: 'codemailbox1208@gmail.com',
+        to: myEmail,
+        subject: mySubject + " - " + myDate + " - " + myTime,
+        text: myMessage
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    res.redirect('/thanks')
+});
+//
+
+app.get("/thanks", function(req, res){
+    res.render("thanks");
+ });
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, function(){
     console.log("listening on " + PORT);
 });
+
