@@ -100,7 +100,13 @@ app.get('/searchme', function(req, res){
 //profile.html --> profile.handlebars
 
 app.get("/profile", function(req, res){
-    res.render("profile", myhandlebarObj);
+    var objSize = Object.keys(myhandlebarObj).length
+    if (objSize == 0){
+        res.redirect('/login');
+    } else {
+        res.render("profile", myhandlebarObj);
+    }
+    
 });
 
 app.get('/create', function(req, res){
