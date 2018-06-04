@@ -1,5 +1,7 @@
 //mysql connection
 var mysql = require("mysql");
+var dialog = require('dialog');
+
 
 // Test Pool
 var pool = mysql.createPool({
@@ -45,6 +47,7 @@ var app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(process.cwd() + '/public'));
+app.use('/upimgs', express.static('public/uploads'));
 
 //set handlebars as the view engine
 var handlebars = require("express-handlebars");
@@ -76,16 +79,40 @@ app.get('/searchme', function(req, res){
     var myZipcode = req.query.zipcode;
   
     //DB query
-    var queryString = 'SELECT * FROM ' + dbTable + ' WHERE first_name = "'+ myEmail+ '" and zipcode = '+ myZipcode + ';';
+    var queryString = 'SELECT * FROM ' + dbTable + ' WHERE email = "'+ myEmail + '" and zipcode = '+ myZipcode + ';';
+    var resSize = 0;
     pool.query(queryString, function(err, res){
-      if(err) {console.log(err);}
+        myhandlebarObj = '';
+        if(err) {console.log(err);}
+        resSize = Object.keys(res).length;
 
-      //handlebar object
-      myhbsObject = {myInfo: res};
-      //pass myhbsOjbect to profile handlebars
+        //handlebar object
+        if (resSize != 0) {
+            myhandlebarObj = {myProfile: res};
+        }
+
+        console.log();
     });
-    res.redirect('/profile')    
-  });
+
+    var objSize = Object.keys(myhandlebarObj).length ;
+    if (objSize == 0) {
+        dialog.warn('User information does not exist!', function(exitCode) {
+            console.log(exitCode);
+        })
+        res.redirect('/login');
+      } else {
+        setTimeout(function(){
+            res.redirect('/profile');
+        }, 1000);
+      }
+});
+
+  
+//profile.html --> profile.handlebars
+
+app.get("/profile", function(req, res){
+    res.render("profile", myhandlebarObj);
+});
 
 //signup.html --> create.handlebars
 
@@ -93,24 +120,58 @@ app.get('/create', function(req, res){
     res.render('create');
 });
 
+//multer for image uploads
+
+var multer = require('multer');
+// var upload = multer({
+// dest: 'public/uploads/',
+// limits: {fileSize: 500000, files:1}
+//});
+
+const path = require('path');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().valueOf() + path.extname(file.originalname))
+    }
+});
+var upload = multer({ storage: storage });
+
+var myImg = '';
+var myDogImg = '';
+
+
+app.post('/upload_h', upload.single('img'), function(req, res) {
+    myImg = "/upImgs/" + req.file.filename;
+//    console.log(req.file.filename);
+});
+
+app.post('/upload_d', upload.single('img'), function(req, res) {
+    myDogImg = "/upImgs/" + req.file.filename;
+//    console.log(req.file.filename);
+});
+
+
 app.post('/create', function(req, res){
     
     var myFirstName = req.body.first_name;
     var myLastName = req.body.last_name;
     var myEmail = req.body.email;
     var myAddress = req.body.address;
-    var myZipcode = req.body.zipcode;
+    var myZipcode = parseInt(req.body.zipcode);
     var myDogName = req.body.dog_name;
     var myDogBreed = req.body.dog_breed;
     var myDogGender = req.body.dog_gender;
-    var myDogAge = req.body.dog_age;
+    var myDogAge = parseInt(req.body.dog_age);
     var myDogPersonality = req.body.dog_personality;
-    // var myDogWeight = req.body.dog_weight;
+    var myDogWeight = parseInt(req.body.dog_weight);
     //var myDogdescription = req.body.dog_description;
 
     var queryString = 'INSERT INTO ' + dbTable +
-        ' (first_name, last_name, email, address, zipcode, dog_name, dog_breed, dog_gender, dog_age, dog_personality ) VALUES ("'+ 
-        myFirstName + '", "' + myLastName + '", "' + myEmail + '", "' + myAddress + '", ' + myZipcode + ', "' + myDogName + '", "' + myDogBreed + '", "' + myDogGender + '", "' + myDogAge + '", "'  + myDogPersonality + '")';
+        ' (first_name, last_name, email, address, zipcode, dog_name, dog_breed, dog_gender, dog_age, dog_personality, dog_weight, img_url, human_img_url) VALUES ("'+ 
+        myFirstName + '", "' + myLastName + '", "' + myEmail + '", "' + myAddress + '", ' + myZipcode + ', "' + myDogName + '", "' + myDogBreed + '", "' + myDogGender + '", "' + myDogAge + '", "'  + myDogPersonality + '", " '+ myDogWeight + '", "' + myDogImg + '", "' + myImg + '")';
 
     pool.query(queryString, function(err, res){
         if(err) {
@@ -118,9 +179,12 @@ app.post('/create', function(req, res){
             console.log("create error");
         }
         console.log("db created!")
+
     });
-    res.redirect('/profile')
+    res.redirect('/login')
 });
+
+
 
 // date.html --> search.handlebars
 
@@ -165,28 +229,7 @@ app.get('/result',function(req,res){
     });
 });
 
-//profile.html --> profile.handlebars
 
-app.get("/profile", function(req, res){
-    //get these values from login pages
-    //for now they have test values
-    var myEmail = "ncubley1@amazon.co.uk";
-    var myZipcode = "93915";
-    
-    //DB query
-    var queryString = 'SELECT * FROM ' + dbTable + ' WHERE email ="'+ myEmail + '" and zipcode = '+myZipcode + ';';
-    //console.log(queryString);
-    pool.query(queryString, function(err, results){
-        if(err) {
-            console.log(err);
-            console.log("profile error");
-        }
-        //handlebar object
-        myhandlebarObj = {myProfile: results};
-        //console.log(myhandlebarObj);
-    res.render("profile", myhandlebarObj);
-    });
-});
 
 //create something for /update where user is able to edit profile information and it sends it to DB
 //app.post(“/update”, function(req,res){
