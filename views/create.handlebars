@@ -8,13 +8,14 @@
         </div>
         <br> <br> 
         <div class="row">
-            <div class="col-xs-6" align="right">
 
-                <form action="/upload_h" method="POST" enctype="multipart/form-data">
-                    <label>Owner Image: </label>
+            <div class="col-xs-4" align="right">
+
+                    <form action="/upload_h" method="POST" enctype="multipart/form-data">
+                    <label>Your Image: </label>
                     <input type="file" name="img">
                     <input type="submit" value="Upload">
-                </form><br>
+                </form><br><br><br>
 
                 <form action="/upload_d" method="POST" enctype="multipart/form-data">
                     <label>Dog Image: </label>
@@ -22,7 +23,14 @@
                     <input type="submit" value="Upload">
                 </form><br>
 
-                <form action="/create" method="post">
+                </div>
+
+
+
+            <div class="col-xs-4" align="right">
+
+           <form action="/create" method="post">
+               
                     <label for="first_name">First Name: </label>
                     <input id="first_name" required="" type="text" align="right" name="first_name" value=""><br>
 
@@ -55,15 +63,23 @@
 
                     <label for="dog_weight">Dog Weight: </label>
                     <input id="dog_weight" type="text" name="dog_weight" value=""><br>
-
                     <br>
-                    <input class="blackbox" type="submit" value="Sign Up">
-                </form>
-            </div>
-            <div class="col-xs-6">
-                <img src="images/banner1crop.png" height="300" width="250">
-            </div>
+
+                    </div>
+ 
+
+        <div class="col-xs-4" align="left">
+            <img src="images/banner1crop.png" height="300" width="250">
         </div>
-    </div>
+ 
+
+        <div class="col-xs-8" align="right"> 
+         
+         <input class="blackbox" type="submit" value="Sign Up">
+         </form>
+
+        </div>
+
+
     <div class="clearfix"></div>
 </section>
